@@ -1,4 +1,4 @@
-const IDL_URL = "http://<your-idl-ip>:<port>/data.json";
+const IDL_URL = "http://10.0.0.216:52020/data.json";
 
 async function fetchIDL() {
   try {
