@@ -5,3 +5,4 @@ url embedded call in google sites:
 
 is the mainline for the entire app
 
+https://sites.google.com/view/gringalleryreview/msfs-web-panel
