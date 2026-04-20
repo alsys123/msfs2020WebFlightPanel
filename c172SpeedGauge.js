@@ -1,3 +1,4 @@
+
 /* ------------------------------
    C172 Speed gauge
    ------------------------------ */
@@ -105,4 +106,79 @@ function drawASI_Face(canvas) {
   }
 }
 
-drawASI_Face(document.getElementById("gauge"));
+/*
+// TEST MODE (smooth random)
+function updateASI_test() {
+  const target = Math.random() * 160;
+  currentKts += (target - currentKts) * 0.1;
+  updateNeedleAsi(currentKts);
+
+//    updateNeedle(160);
+
+}
+
+// LIVE MODE (fetch from backend)
+async function updateASI_live() {
+  try {
+    const res = await fetch("http://10.0.0.216:5000/data");
+    const d = await res.json();
+    updateNeedleAsi(d.airspeed);
+  } catch (e) {
+    console.log("Error:", e);
+  }
+}
+
+// Shared needle update
+function updateNeedleAsi(kts) {
+   
+    const MIN = 0;
+    const MAX = 160;
+     
+    // tune these two to match your image
+    const ANGLE_MIN = 0;  // where 0 kt is on the image
+    const ANGLE_MAX = 265;   // where 160 kt is on the image
+    
+    const angle =
+	  ANGLE_MIN + (kts - MIN) / (MAX - MIN) * (ANGLE_MAX - ANGLE_MIN);
+    
+  dei("asiNeedle").style.transform = `rotate(${angle}deg)`;
+}
+*/
+
+async function updateASI() {
+  let kts;
+
+    if (testMode === "pause") return;
+    
+  if (testMode === "on") {
+    // smooth random motion
+    const target = Math.random() * 160;
+    currentKts += (target - currentKts) * 0.1;
+    kts = currentKts;
+
+  } else {
+    // live mode
+    try {
+      const res = await fetch("http://10.0.0.216:5000/data");
+      const d = await res.json();
+      kts = d.airspeed;
+    } catch (e) {
+      console.log("ASI fetch error:", e);
+      return;
+    }
+  }
+
+  // draw needle
+  const MIN = 0;
+  const MAX = 160;
+
+  const ANGLE_MIN = 0;     // 0 kt at top
+  const ANGLE_MAX = 265;   // 160 kt at bottom-right
+
+  const angle =
+    ANGLE_MIN + (kts - MIN) / (MAX - MIN) * (ANGLE_MAX - ANGLE_MIN);
+
+  dei("asiNeedle").style.transform = `rotate(${angle}deg)`;
+}
+
+drawASI_Face(document.getElementById("asiGauge"));

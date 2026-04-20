@@ -12,25 +12,39 @@
   <body>
 
     <div id="topbar">
-      <button class="panel-btn" data-panel="asi">Airspeed</button>
-      <button class="panel-btn" data-panel="alt">Altimeter</button>
-      <button class="panel-btn" data-panel="hdg">Heading</button>
+      <button class="panel-btn" data-panel="basic4">Basic4</button>
+      <button class="panel-btn" data-panel="c172Six">C172 Six</button>
+      <button class="panel-btn" data-panel="c172Lights">C172 Lights</button>
       
-      <button id="testToggle">Test Mode: ON</button>
+      <button id="testToggle">Test Mode: Pause</button>
     </div>
 
     
     <h2>Airspeed Indicator</h2>
     
     <div id="asi">
-      <canvas id="gauge" width="300" height="300"></canvas>
+      <canvas id="asiGauge" width="300" height="300"></canvas>
       <!--      <img id="bg" src="images/SpeedGauge172.png"> -->
-      <div id="needle"></div>
+      <div id="asiNeedle"></div>
+    </div>
+
+    <div id="alt">
+      <canvas id="altGauge" width="300" height="300"></canvas>
+      <div id="altNeedle"></div>
+    </div>
+
+    <div id="hdg">
+      <canvas id="hdgGauge" width="300" height="300"></canvas>
+      <div id="hdgLubber"></div>
     </div>
     
     <script src="utils.js"></script>
+    <script src="panelDefs.js"></script>
     <script src="msfsWebPanel.js"></script>
     <script src="c172SpeedGauge.js"></script>
+    <script src="c172Alt.js"></script>
+    <script src="c172Heading.js"></script>
+    
 
 
   </body>

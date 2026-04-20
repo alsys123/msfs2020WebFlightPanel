@@ -11,7 +11,6 @@ body {
     position: relative;
     width: 300px;
     height: 300px;
-    margin: 0 auto;
 }
 
 canvas {
@@ -21,7 +20,7 @@ canvas {
 }
 
 /* Code-generated needle */
-#needle {
+#asiNeedle {
     position: absolute;
     width: 4px;
     height: 45%;
@@ -39,4 +38,55 @@ canvas {
   height: 100%;
   top: 0;
   left: 0;
+}
+
+#alt {
+  position: absolute;   /* so you can move it anywhere */
+  width: 300px;
+  height: 300px;
+}
+
+#altNeedle {
+  position: absolute;
+  width: 4px;
+  height: 45%;
+  background: white;
+  top: 5%;
+  left: 50%;
+  transform-origin: 50% 90%;
+  transform: rotate(0deg);
+  border-radius: 2px;
+  transition: transform 0.15s linear;
+}
+
+#hdg {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+}
+
+#hdgLubber {
+  position: absolute;
+  width: 4px;
+  height: 40px;
+  background: red;
+  top: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+#testToggle.off {
+  background-color: red;
+  color: white;
+}
+
+#testToggle.on {
+  background-color: #2ecc71; /* green */
+  color: black;
+}
+
+#testToggle.pause {
+  background-color: #f1c40f; /* yellow */
+  color: black;
 }

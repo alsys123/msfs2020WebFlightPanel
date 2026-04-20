@@ -11,3 +11,9 @@ function dei(Element) {
 function cLog(...text) {
     console.log(...text);
 }
+
+function moveGauge(id, x, y) {
+  const el = dei(id);
+  el.style.left = x + "px";
+  el.style.top = y + "px";
+}
