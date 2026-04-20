@@ -1,0 +1,42 @@
+
+body {
+    background: #222;
+    color: #eee;
+    font-family: sans-serif;
+    padding: 20px;
+    text-align: center;
+}
+
+#asi {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    margin: 0 auto;
+}
+
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Code-generated needle */
+#needle {
+    position: absolute;
+    width: 4px;
+    height: 45%;
+    background: red;
+    top: 7%;
+    left: 50%;
+    transform-origin: 50% 90%;
+    transform: rotate(0deg);
+    border-radius: 2px;
+}
+
+#bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
