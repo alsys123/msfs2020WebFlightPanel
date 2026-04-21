@@ -1,6 +1,6 @@
 // ==================== FIXED & IMPROVED HEADING GAUGE ====================
 
-function drawHeadingFace(canvas, bugHeading = 0) {
+function drawHeadingTypeBFace(canvas, bugHeading = 0) {
   const ctx = canvas.getContext("2d");
   const cx = canvas.width / 2;
   const cy = canvas.height / 2;
@@ -105,12 +105,14 @@ function drawHeadingFace(canvas, bugHeading = 0) {
 
 let headingBug = 120;   // ← change this value whenever you want to move the bug
 
-async function updateHeading() {
+async function updateHeadingTypeB() {
   let hdg = 0;
   if (testMode === "pause") return;
 
   if (testMode === "on") {
-    hdg = 60;                 // your test value
+//      hdg = 110;                 // your test value
+      hdg = Math.sin(Date.now() / 800) * 18;
+
   } else {
     try {
       const res = await fetch("http://10.0.0.216:5000/data");
@@ -123,7 +125,7 @@ async function updateHeading() {
   }
 
   // Rotate the entire card (standard heading-indicator technique)
-  const canvas = document.getElementById("hdgGauge");
+  const canvas = document.getElementById("hdgGaugeTypeB");
   canvas.style.transform = `rotate(${-hdg}deg)`;
 
   // If you ever change the bug dynamically, just redraw (very cheap):
@@ -132,8 +134,8 @@ async function updateHeading() {
 
 // ==================== INITIAL DRAW ====================
 
-const canvas = document.getElementById("hdgGauge");
-drawHeadingFace(canvas, headingBug);   // initial draw with your chosen bug heading
+const canvas = document.getElementById("hdgGaugeTypeB");
+drawHeadingTypeBFace(canvas, headingBug);   // initial draw with your chosen bug heading
 
 // Call this whenever you want to move the heading bug later:
 // drawHeadingFace(canvas, newBugValue);

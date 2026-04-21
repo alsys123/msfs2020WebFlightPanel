@@ -12,8 +12,8 @@
   <body>
 
     <div id="topbar">
-      <button class="panel-btn" data-panel="basic4">Basic4</button>
-      <button class="panel-btn" data-panel="c172Six">C172 Six</button>
+      <button id="basic4ID" class="panel-btn" data-panel="basic4">Basic4</button>
+      <button class="panel-btn" data-panel="sixPack">Six Pack</button>
       <button class="panel-btn" data-panel="c172Lights">C172 Lights</button>
       
       <button id="testToggle">Test Mode: Pause</button>
@@ -37,8 +37,24 @@
       <canvas id="hdgGauge" width="300" height="300"></canvas>
       <div id="hdgLubber"></div>
     </div>
+
+    <div id="timerClock">
+      <canvas id="timerCanvas" width="300" height="300"></canvas>
+    </div>
     
+    <div id="hdgTypeB">
+      <canvas id="hdgGaugeTypeB" width="300" height="300"></canvas>
+      <div id="hdgLubberTypeB"></div>
+    </div>
+
+    <div id="attitudeDivID">
+      <canvas id="attitudeCanvas" width="300" height="300"></canvas>
+    </div>
+
     <script src="utils.js"></script>
+    <script src="gauges/attitude.js"></script>
+    <script src="gauges/timer.js"></script>
+    <script src="gauges/headingTypeB.js"></script>
     <script src="panelDefs.js"></script>
     <script src="msfsWebPanel.js"></script>
     <script src="c172SpeedGauge.js"></script>

@@ -10,23 +10,6 @@ let updateTimer = null;
 let currentKts = 0;
 
 
-
-
-function startUpdateLoop(testMode) {
-    setupTestButton(testMode);
-
-    //default
-    setupPanelBasic4();
-    
-    if (updateTimer) clearInterval(updateTimer);
-    
-    updateTimer = setInterval(() => {
-	updateASI();      // your ASI unified version
-	updateAltimeter();      // new unified altimeter
-	updateHeading();
-    }, 200);
-}
-
 // Start immediately
 startUpdateLoop("pause");  // start up in pause mode
 
@@ -43,11 +26,13 @@ document.querySelectorAll(".panel-btn").forEach(btn => {
 	const panel = btn.dataset.panel;
 	cLog("Selected panel:", panel);
 
+	hideAllGauges();
+
 	if (panel === "basic4") {
 	    setupPanelBasic4();
 	}
-	if (panel === "c172Six") {
-	    setupPanelC172Six();
+	if (panel === "sixPack") {
+	    setupPanelSixPack();
 	}
 	
     });
@@ -88,4 +73,28 @@ function setupTestButton(testMode) {
     
     console.log("Test mode:", testMode);
     
+}
+
+function startUpdateLoop(testMode) {
+    setupTestButton(testMode);
+    hideAllGauges();
+
+    //default
+    setupPanelBasic4();
+    const btn = dei("basic4ID");   // whatever your button's ID is
+    btn.classList.add("active");
+    btn.click();                    // triggers the full panel setup
+    
+//    document.querySelector('[data-panel="basic4"]').click();
+    
+    if (updateTimer) clearInterval(updateTimer);
+    
+    updateTimer = setInterval(() => {
+	updateASI();      // your ASI unified version
+	updateAltimeter();      // new unified altimeter
+	updateHeading();
+	updateTimerClock();
+	updateHeadingTypeB();
+	updateAttitude();
+    }, 200);
 }
