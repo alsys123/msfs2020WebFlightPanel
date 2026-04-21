@@ -4,16 +4,18 @@
 
 function setupPanelBasic4() {
     const gaugePositions = {
-	asi:         { x: 70,  y: 150, size: 300 },
-	alt:         { x: 520, y: 150, size: 300 },
-	hdg:         { x: 70,  y: 450, size: 300 },
-	timerCanvas: { x: 520, y: 450, size: 300 }
+	asi:         { x: 40,   y: 150, size: 200 },
+	alt:         { x: 620,  y: 150, size: 200 },
+	hdg:         { x: 40,   y: 450, size: 200 },
+	timerCanvas: { x: 260,  y: 230, size: 350 }
     };
     
     for (const id in gaugePositions) {
 	const pos = gaugePositions[id];
 	setGauge(id, pos.x, pos.y, pos.size);
     }
+
+    dei("panelTitle").textContent = "Basic 4 Panel";
 
 }
 function setupPanelSixPack() {
@@ -31,6 +33,7 @@ function setupPanelSixPack() {
 	setGauge(id, pos.x, pos.y, pos.size);
     }
 
+    dei("panelTitle").textContent = "Six Pack Panel";
 }
 
 

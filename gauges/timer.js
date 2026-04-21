@@ -6,6 +6,8 @@ let stopwatch1 = { running: false, startTime: 0, elapsed: 0 };
 let stopwatch2 = { running: false, startTime: 0, elapsed: 0 };
 let stopwatch3 = { running: false, startTime: 0, elapsed: 0 };
 
+let hoverZone = 0; // 0 = none, 1 = SW1, 2 = SW2, 3 = SW3
+
 function drawTimerFace(canvas) {
   const ctx = canvas.getContext("2d");
   const w = canvas.width;
@@ -16,7 +18,12 @@ function drawTimerFace(canvas) {
   ctx.clearRect(0, 0, w, h);
 
   // Background / Bezel
-  ctx.beginPath();
+    ctx.beginPath();
+
+//    const radius = Math.min(w, h) / 2 - 2;  // bigger oval
+//    ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+//    ctx.lineWidth = 20;                     // thicker bezel
+
   ctx.arc(cx, cy, Math.min(w, h) / 2 - 10, 0, Math.PI * 2);
   ctx.fillStyle = "#0a0a0a";
   ctx.fill();
@@ -63,26 +70,26 @@ function drawTimerFace(canvas) {
 
   // LOCAL TIME
   ctx.fillStyle = "#00ffcc";
-  ctx.font = "bold 28px monospace";
-  ctx.fillText("LOCAL", cx - 95, 55);
-  ctx.font = "bold 42px monospace";
+  ctx.font = "bold 20px monospace";
+  ctx.fillText("LOCAL", cx - 55, 65);
+  ctx.font = "bold 20px monospace";
   ctx.fillText(`${localHours.toString().padStart(2,'0')}:${localMins.toString().padStart(2,'0')}`, cx - 95, 95);
 
   // ZULU TIME
   ctx.fillStyle = "#00ccff";
-  ctx.font = "bold 28px monospace";
-  ctx.fillText("ZULU", cx + 95, 55);
-  ctx.font = "bold 42px monospace";
+  ctx.font = "bold 20px monospace";
+  ctx.fillText("ZULU", cx + 55, 65);
+  ctx.font = "bold 20px monospace";
   ctx.fillText(`${zuluHours.toString().padStart(2,'0')}:${zuluMins.toString().padStart(2,'0')}`, cx + 95, 95);
 
   // FLIGHT TIME
   ctx.fillStyle = "#ffff66";
-  ctx.font = "bold 26px monospace";
-  ctx.fillText("FLIGHT", cx, 165);
-  ctx.font = "bold 38px monospace";
+  ctx.font = "bold 22px monospace";
+  ctx.fillText("- flight -", cx, 130);
+  ctx.font = "bold 22px monospace";
   ctx.fillText(
     `${flightH.toString().padStart(2,'0')}:${flightM.toString().padStart(2,'0')}:${flightS.toString().padStart(2,'0')}`,
-    cx, 205
+    cx, 155
   );
 
   // STOPWATCHES
@@ -90,23 +97,46 @@ function drawTimerFace(canvas) {
   
   // SW1
   ctx.fillStyle = "#ff88ff";
-  ctx.fillText("LEG 1", cx - 105, 255);
-  ctx.fillText(getSWTime(stopwatch1), cx - 105, 285);
+  ctx.fillText("LEG 1", cx - 75, 200);
+  ctx.fillText(getSWTime(stopwatch1), cx - 75, 220); // was cx-105
 
   // SW2
   ctx.fillStyle = "#88ff88";
-  ctx.fillText("LEG 2", cx, 255);
+  ctx.fillText("LEG 2", cx, 265);
   ctx.fillText(getSWTime(stopwatch2), cx, 285);
 
   // SW3
   ctx.fillStyle = "#ffaa66";
-  ctx.fillText("LEG 3", cx + 105, 255);
-  ctx.fillText(getSWTime(stopwatch3), cx + 105, 285);
+  ctx.fillText("LEG 3", cx + 75, 200);
+  ctx.fillText(getSWTime(stopwatch3), cx + 75, 220);
 
   // Small labels at bottom
   ctx.font = "16px sans-serif";
   ctx.fillStyle = "#888";
-  ctx.fillText("Click sections to control stopwatches", cx, h - 25);
+    ctx.fillText("Click sections to control stopwatches", cx, h - 25);
+
+/*
+    // === HOVER HIGHLIGHT ===
+    if (hoverZone > 0) {
+	ctx.save();
+	ctx.globalAlpha = 0.25;
+	ctx.fillStyle = "#ffffff";
+
+	// Hard-coded highlight boxes around the text
+	if (hoverZone === 1) {
+	    ctx.fillRect(cx - 75, 200, 80, 70);   // around LEG 1 + time
+	}
+	if (hoverZone === 2) {
+	    ctx.fillRect(cx - 25, 220, 80, 70);    // around LEG 2 + time
+	}
+	if (hoverZone === 3) {
+	    ctx.fillRect(cx + 40, 160, 80, 70);    // around LEG 3 + time
+	}
+	
+	ctx.restore();
+    }
+*/
+    
 }
 
 // ==================== CONTROL FUNCTIONS ====================
@@ -175,5 +205,39 @@ timerCanvas.addEventListener("click", (e) => {
     if (x < 140) toggleStopwatch(1);
     else if (x > 280) toggleStopwatch(3);
     else toggleStopwatch(2);
+  }
+});
+
+timerCanvas.addEventListener("mousemove", (e) => {
+  const rect = timerCanvas.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+
+  let zone = 0;
+
+  if (y > 240) {
+    if (x < 140) zone = 1;
+    else if (x > 280) zone = 3;
+    else zone = 2;
+  }
+
+  hoverZone = zone;
+
+  // Change cursor
+  timerCanvas.style.cursor = zone ? "pointer" : "default";
+});
+
+timerCanvas.addEventListener("touchstart", (e) => {
+  const rect = timerCanvas.getBoundingClientRect();
+  const touch = e.touches[0];
+  const x = touch.clientX - rect.left;
+  const y = touch.clientY - rect.top;
+
+  if (y > 240) {
+    if (x < 140) hoverZone = 1;
+    else if (x > 280) hoverZone = 3;
+    else hoverZone = 2;
+  } else {
+    hoverZone = 0;
   }
 });
