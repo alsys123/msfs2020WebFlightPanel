@@ -179,7 +179,9 @@ function drawCompassRose(ctx, cx, cy, hdg) {
 
 // ==================== UPDATE LOGIC ====================
 async function updateG1000() {
-  let flightData = { pitch: 0, roll: 0, heading: 0, altitude: 0, airspeed: 0 };
+    if (testMode === "pause") return;
+
+    let flightData = { pitch: 0, roll: 0, heading: 0, altitude: 0, airspeed: 0 };
 
   if (testMode === "on") {
     flightData = {
@@ -201,3 +203,13 @@ const gCanvas = document.getElementById("g1000Canvas");
 gCanvas.width = 600;
 gCanvas.height = 450;
 setInterval(updateG1000, 30);
+
+// init the panel
+const flightData = {
+      pitch: 0,
+      roll: 0,
+      heading: 0,
+      altitude: 0,
+      airspeed: 0
+    };
+drawG1000(gCanvas, flightData);

@@ -92,6 +92,7 @@ canvas {
 }
 
 /* so resize will work on the div */
+#g1000CanvasDivId canvas,
 #trimCanvasId canvas,
 #switchesCanvasId canvas,
 #vsiCanvasDivId canvas,

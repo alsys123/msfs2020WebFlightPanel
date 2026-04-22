@@ -30,7 +30,7 @@ How to add a new gauge to a panel:
 	    height: 100%;
     }
 
-- check under update you have code like this:
+- in panel**.js file,  check under update you have code like this:
     if (testMode === "pause") return;
 
 - go through the checklist to add the msfs and test freeds from server python code

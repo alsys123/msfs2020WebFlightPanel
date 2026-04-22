@@ -123,5 +123,7 @@ function startUpdateLoop(testMode) {
 	updateAttitude();
 	updateVsi();
 	updateTrimWheel();
+	updateG1000();
+	
     }, 200);
 }

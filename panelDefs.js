@@ -114,7 +114,8 @@ function setupPanelC172() {
 function setupPanelG1000() {
     const gaugePositions = {
 //	switchesCanvasId: { x: 40,   y: 120, size: 600 },
- 	timerCanvas:      { x: 600,  y: 230, size: 350 }
+ 	timerCanvas:      { x: 600, y: 230, size: 200 },
+	g1000CanvasDivId: { x: 40,  y: 150, size: 500 }
     };
     
     for (const id in gaugePositions) {
@@ -150,7 +151,7 @@ function hideAllGauges() {
 	  ["asi", "alt", "hdg", "timerCanvas", "hdgTypeB",
 	   "attitudeDivId",
 	   "turnRateDivId", "vsiCanvasDivId","switchesCanvasId",
-	   "trimCanvasId"
+	   "trimCanvasId","g1000CanvasDivId"
 	  ];
 
   gauges.forEach(id => {
