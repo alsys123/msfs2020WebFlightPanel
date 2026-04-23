@@ -129,7 +129,10 @@ function drawFuelFace(canvas, fuelGallons = 0, maxGallons = 56) {
 
 // ==================== UPDATE FUNCTION ====================
 async function updateFuel() {
-  let fuel = 0;
+
+    if (testMode === "pause") return;
+    
+    let fuel = 0;
   const maxGallons = 56;   // ← Change for your aircraft (e.g. 92 for Cessna 182, 26 for 172, etc.)
 
   if (testMode === "on") {
@@ -156,3 +159,8 @@ fuelCanvas.height = 360;
 
 drawFuelFace(fuelCanvas, 0);
 setInterval(updateFuel, 150);   // updates every 150ms
+
+window.addEventListener("DOMContentLoaded", () => {
+    const fuelCanvas = document.getElementById("fuelCanvas");
+    drawFuelFace(fuelCanvas, 0, 30);
+});

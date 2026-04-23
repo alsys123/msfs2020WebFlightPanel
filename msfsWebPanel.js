@@ -127,6 +127,9 @@ function startUpdateLoop(testMode) {
 	updateAltimeterTypeB();
 	updateG1000RadioStack();
 	updateC172RadioStack();
+	updateTrimTypeB();
+	updateFuel();
+	updateTimerClockStyleB();
 	
     }, 200);
 }

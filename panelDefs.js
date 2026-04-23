@@ -73,19 +73,13 @@ function setupPanelEngine() {
     const gaugePositions = {
 //	switchesCanvasId: { x: 40,   y: 120, size: 600 },
  	timerCanvas:      { x: 40,  y: 120, size: 250 },
-	trimCanvasId:      { x: 40, y: 400, size: 300 }
+	trimCanvasId:      { x: 40, y: 400, size: 300 },
+	fuelCanvas:       { x: 300,  y: 130, size: 100 },
+	timerCanvasStyleB: { x: 500,  y: 130, size: 100 }
 
     };
-                positionGaugesAndSetTitle(gaugePositions, "Engine");
+    positionGaugesAndSetTitle(gaugePositions, "Engine");
 
-    /*
-    for (const id in gaugePositions) {
-	const pos = gaugePositions[id];
-	setGauge(id, pos.x, pos.y, pos.size);
-    }
-
-    dei("panelTitle").textContent = basicTitle + "Engine";
-*/
 }
 
 function setupPanelRadio() {
@@ -115,7 +109,9 @@ function setupPanelC172() {
 
  	timerCanvas:      { x: 50,  y: 130, size: 100 },
 
-	altGaugeTypeB: { x: 620,  y: 150, size: 200 }
+	altGaugeTypeB:   { x: 620,  y: 150, size: 200 },
+	trimCanvasTypeB: { x: 850,   y: 450, width: 75, height: 200 },
+	fuelCanvas: { x: 150,  y: 130, size: 100 }
 
     };
         positionGaugesAndSetTitle(gaugePositions, "C172");
@@ -204,7 +200,7 @@ function hideAllGauges() {
 	   "trimCanvasId","g1000CanvasDivId",
 	   "radioStackCanvasDivId",
 	   "altGaugeTypeB", // hiding the canvas not the Div
-	   "c172Stack"
+	   "c172Stack", "trimCanvasTypeB","fuelCanvas","timerCanvasStyleB"
 	  ];
 
   gauges.forEach(id => {

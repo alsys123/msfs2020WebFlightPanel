@@ -1,7 +1,7 @@
 // ==================== TRIM INDICATOR ====================
 // Matches the dark-bezel, high-contrast aviation style
 
-function drawTrimFace(canvas, trimValue = 0, autoPilotEngaged = false) {
+function drawTrimFaceTypeB(canvas, trimValue = 0, autoPilotEngaged = false) {
   // trimValue: -1.0 (Nose Down) to +1.0 (Nose Up). 0 is Neutral.
   const ctx = canvas.getContext("2d");
   const cx = canvas.width / 2;
@@ -101,7 +101,10 @@ function drawTrimFace(canvas, trimValue = 0, autoPilotEngaged = false) {
 }
 
 // ==================== UPDATE FUNCTION ====================
-async function updateTrim() {
+async function updateTrimTypeB() {
+
+    if (testMode === "pause") return;
+    
   let trimValue = 0; // -1.0 to 1.0
   let apActive = false;
 
@@ -121,14 +124,19 @@ async function updateTrim() {
     }
   }
 
-  const canvas = document.getElementById("trimCanvas");
-  drawTrimFace(canvas, trimValue, apActive);
+  const canvas = document.getElementById("trimCanvasTypeB");
+  drawTrimFaceTypeB(canvas, trimValue, apActive);
 }
 
 // ==================== INIT ====================
-const trimCanvas = document.getElementById("trimCanvas");
+const trimCanvasTypeB = document.getElementById("trimCanvasTypeB");
 // Trim indicators are usually taller than they are wide
-trimCanvas.width = 160; 
-trimCanvas.height = 360;
+trimCanvasTypeB.width = 160; 
+trimCanvasTypeB.height = 360;
 
-setInterval(updateTrim, 50); 
+setInterval(updateTrimTypeB, 50); 
+
+window.addEventListener("DOMContentLoaded", () => {
+    const trimCanvasTypeB = document.getElementById("trimCanvasTypeB");
+    drawTrimFaceTypeB(trimCanvasTypeB, 0, false);
+});

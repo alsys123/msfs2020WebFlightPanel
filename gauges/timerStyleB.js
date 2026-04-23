@@ -1,6 +1,13 @@
 // ==================== STYLE B: CHRONOMETER / TIMER ====================
 // Professional "Glass Cockpit" look with active status glows and tactile zones
 
+let flightStartTimeTypeB = null;     // Set this when flight starts (Date object)
+let stopwatch1TypeB = { running: false, startTime: 0, elapsed: 0 };
+let stopwatch2TypeB = { running: false, startTime: 0, elapsed: 0 };
+let stopwatch3TypeB = { running: false, startTime: 0, elapsed: 0 };
+
+let hoverZoneTypeB = 0; // 0 = none, 1 = SW1, 2 = SW2, 3 = SW3
+
 function drawTimerFaceStyleB(canvas) {
   const ctx = canvas.getContext("2d");
   const w = canvas.width;
@@ -43,8 +50,8 @@ function drawTimerFaceStyleB(canvas) {
 
   // 4. FLIGHT TIME (Center - High Visibility)
   let flightStr = "00:00:00";
-  if (flightStartTime) {
-    const elapsed = Math.floor((now - flightStartTime) / 1000);
+  if (flightStartTimeTypeB) {
+    const elapsed = Math.floor((now - flightStartTimeTypeB) / 1000);
     const h = Math.floor(elapsed / 3600).toString().padStart(2,'0');
     const m = Math.floor((elapsed % 3600) / 60).toString().padStart(2,'0');
     const s = (elapsed % 60).toString().padStart(2,'0');
@@ -57,16 +64,16 @@ function drawTimerFaceStyleB(canvas) {
   ctx.fillText("FLIGHT TIME", cx, 135);
   ctx.fillStyle = "#ffff66";
   ctx.font = "bold 38px monospace";
-  ctx.shadowBlur = flightStartTime ? 10 : 0;
+  ctx.shadowBlur = flightStartTimeTypeB ? 10 : 0;
   ctx.shadowColor = "#ffff66";
   ctx.fillText(flightStr, cx, 162);
   ctx.shadowBlur = 0;
 
   // 5. STOPWATCHES (Bottom - The "Action" Zone)
   const swData = [
-    { label: "LEG 1", obj: stopwatch1, x: cx - 110, color: "#ff88ff", zone: 1 },
-    { label: "LEG 2", obj: stopwatch2, x: cx,       color: "#88ff88", zone: 2 },
-    { label: "LEG 3", obj: stopwatch3, x: cx + 110, color: "#ffaa66", zone: 3 }
+    { label: "LEG 1", obj: stopwatch1TypeB, x: cx - 110, color: "#ff88ff", zone: 1 },
+    { label: "LEG 2", obj: stopwatch2TypeB, x: cx,       color: "#88ff88", zone: 2 },
+    { label: "LEG 3", obj: stopwatch3TypeB, x: cx + 110, color: "#ffaa66", zone: 3 }
   ];
 
   swData.forEach(sw => {
@@ -74,7 +81,7 @@ function drawTimerFaceStyleB(canvas) {
     const timeStr = getSWTimeFormatted(sw.obj);
 
     // Draw Tactile Button Background
-    ctx.fillStyle = hoverZone === sw.zone ? "#222" : "#111";
+    ctx.fillStyle = hoverZoneTypeB === sw.zone ? "#222" : "#111";
     ctx.beginPath();
     ctx.roundRect(sw.x - 50, 205, 100, 75, 8);
     ctx.fill();
@@ -138,3 +145,111 @@ UI Improvements:
 
 To use this: Simply replace your drawTimerFace function with drawTimerFaceStyleB. Ensure you keep your existing updateTimerClock and event listeners, as they are already set up to handle the logic beautifully!
 */
+// ==================== CONTROL FUNCTIONS ====================
+
+function startFlightTimerTypeB() {
+  flightStartTimeTypeB = new Date();
+}
+
+function resetFlightTimerTypeB() {
+  flightStartTimeTypeB = null;
+}
+
+// Toggle stopwatch (1, 2 or 3)
+function toggleStopwatchTypeB(num) {
+  const sw = num === 1 ? stopwatch1TypeB : num === 2 ? stopwatch2TypeB : stopwatch3TypeB;
+  
+  if (sw.running) {
+    // Stop
+    sw.elapsed += Date.now() - sw.startTime;
+    sw.running = false;
+  } else {
+    // Start
+    sw.startTime = Date.now();
+    sw.running = true;
+  }
+}
+
+function resetStopwatchTypeB(num) {
+  const sw = num === 1 ? stopwatch1TypeB : num === 2 ? stopwatch2TypeB : stopwatch3TypeB;
+  sw.elapsed = 0;
+  sw.running = false;
+  sw.startTime = 0;
+}
+
+// ==================== UPDATE / ANIMATION LOOP ====================
+function updateTimerClockStyleB() {
+
+    if (testMode === "pause") return;
+    
+  const canvas = document.getElementById("timerCanvasStyleB"); // ← your canvas ID
+  if (canvas) drawTimerFaceStyleB(canvas);
+}
+
+// Start the timer display
+function initTimerStyleB(canvasElement) {
+  // Initial draw
+  drawTimerFaceStyleB(canvasElement);
+  
+  // Update every 200ms (smooth seconds)
+  setInterval(() => {
+    drawTimerFaceStyleB(canvasElement);
+  }, 200);
+}
+
+// Example usage with your canvas:
+const timerCanvasStyleB = document.getElementById("timerCanvasStyleB");
+
+timerCanvasStyleB.width = 420;
+timerCanvasStyleB.height = 340;
+
+initTimerStyleB(timerCanvasStyleB);
+
+// Example click handling (add to your HTML canvas)
+timerCanvasStyleB.addEventListener("click", (e) => {
+
+    const rect = timerCanvasStyleB.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+  
+  // Rough click zones for the 3 stopwatches
+  if (y > 240) {
+    if (x < 140) toggleStopwatchTypeB(1);
+    else if (x > 280) toggleStopwatchTypeB(3);
+    else toggleStopwatchTypeB(2);
+  }
+});
+
+timerCanvasStyleB.addEventListener("mousemove", (e) => {
+  const rect = timerCanvasStyleB.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+
+  let zone = 0;
+
+  if (y > 240) {
+    if (x < 140) zone = 1;
+    else if (x > 280) zone = 3;
+    else zone = 2;
+  }
+
+  hoverZoneTypeB = zone;
+
+  // Change cursor
+  timerCanvasStyleB.style.cursor = zone ? "pointer" : "default";
+});
+
+timerCanvasStyleB.addEventListener("touchstart", (e) => {
+  const rect = timerCanvasStyleB.getBoundingClientRect();
+  const touch = e.touches[0];
+  const x = touch.clientX - rect.left;
+  const y = touch.clientY - rect.top;
+
+  if (y > 240) {
+    if (x < 140) hoverZoneTypeB = 1;
+    else if (x > 280) hoverZoneTypeB = 3;
+    else hoverZoneTypeB = 2;
+  } else {
+    hoverZoneTypeB = 0;
+  }
+});
