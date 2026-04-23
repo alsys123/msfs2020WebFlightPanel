@@ -122,3 +122,19 @@ function getSWTimeFormatted(sw) {
   // Just show Min:Sec for Leg timers to keep it clean
   return `${m}:${s}`;
 }
+
+/*
+Key StyleB Fixes:
+1.	Status LED: Each LEG timer now has a tiny "LED" at the top of its box that glows when the timer is active. This provides an immediate visual cue without having to read the numbers.
+2.	Tactile Buttons: Instead of clicking "floating text," the LEG timers are now inside defined boxes (roundRect). These boxes change background color when you hover over them, making the click zones feel like physical buttons.
+3.	Visual Hierarchy:
+• Local/Zulu are moved to the top and separated.
+• Flight Time is now the largest element (Centerpiece) with a subtle glow when the flight has started.
+• Formatting: Leg timers are shortened to MM:SS (unless they go over an hour) to keep the layout from getting cluttered.
+4.	Logical Dividers: Added subtle dark-grey lines to separate the different data blocks, which is a hallmark of professional avionics displays.
+UI Improvements:
+• Active State: The LEG time numbers turn White when running and return to their Theme Color when paused.
+• Interaction: The hoverZone check is now more precise, highlighting the entire button box rather than just a square around the text.
+
+To use this: Simply replace your drawTimerFace function with drawTimerFaceStyleB. Ensure you keep your existing updateTimerClock and event listeners, as they are already set up to handle the logic beautifully!
+*/
