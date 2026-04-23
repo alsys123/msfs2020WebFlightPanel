@@ -124,6 +124,8 @@ function startUpdateLoop(testMode) {
 	updateVsi();
 	updateTrimWheel();
 	updateG1000();
+	updateAltimeterTypeB();
+	updateG1000RadioStack();
 	
     }, 200);
 }

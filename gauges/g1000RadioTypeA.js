@@ -92,8 +92,11 @@ function swapCom1() {
 }
 
 // ==================== UPDATE LOOP ====================
-async function updateStack() {
-  // In a real app, you'd fetch this from SimConnect
+async function updateG1000RadioStack() {
+
+    if (testMode === "pause") return;
+    
+    // In a real app, you'd fetch this from SimConnect
   // Example: const res = await fetch("http://10.0.0.216:5000/radios");
   
   const canvas = document.getElementById("radioStackCanvas");
@@ -103,4 +106,4 @@ async function updateStack() {
 const radioCanvas = document.getElementById("radioStackCanvas");
 radioCanvas.width = 800; // Wide for the top of the PFD
 radioCanvas.height = 60;
-setInterval(updateStack, 100);
+setInterval(updateG1000RadioStack, 100);

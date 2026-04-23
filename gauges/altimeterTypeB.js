@@ -2,6 +2,7 @@
 // Features: Triple-needle logic, Kollsman Window, and High-Fidelity Graphics
 
 function drawAltimeterStyleB(canvas, altitude = 0, pressureHg = 29.92) {
+
   const ctx = canvas.getContext("2d");
   const cx = canvas.width / 2;
   const cy = canvas.height / 2;
@@ -110,7 +111,8 @@ function drawAltimeterStyleB(canvas, altitude = 0, pressureHg = 29.92) {
   ctx.fillStyle = "#222";
   ctx.fill();
   ctx.strokeStyle = "#666";
-  ctx.stroke();
+    ctx.stroke();
+
 }
 
 function drawNeedle(ctx, cx, cy, angle, length, width, color, isPointer = false) {
@@ -137,7 +139,12 @@ function drawNeedle(ctx, cx, cy, angle, length, width, color, isPointer = false)
 }
 
 // ==================== UPDATE LOGIC ====================
-async function updateAltimeter() {
+async function updateAltimeterTypeB() {
+
+    cLog("updateAltimeterTypeB");
+    
+    if (testMode === "pause") return;
+    
   let altitude = 0;
   let pressure = 29.92;
 
@@ -153,12 +160,15 @@ async function updateAltimeter() {
     } catch (e) { console.log(e); }
   }
 
-  const canvas = document.getElementById("altGauge");
+  const canvas = document.getElementById("altGaugeTypeB");
   drawAltimeterStyleB(canvas, altitude, pressure);
 }
 
 // Initialize
-const altCanvas = document.getElementById("altGauge");
-altCanvas.width = 400;
-altCanvas.height = 400;
-setInterval(updateAltimeter, 50);
+const altGaugeTypeB = document.getElementById("altGaugeTypeB");
+
+drawAltimeterStyleB(altGaugeTypeB, 0, 29.92);
+
+altGaugeTypeB.width = 400;
+altGaugeTypeB.height = 400;
+setInterval(updateAltimeterTypeB, 50);

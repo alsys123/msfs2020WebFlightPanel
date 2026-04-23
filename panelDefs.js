@@ -2,12 +2,15 @@
    Panel Defintions
    ------------------------------ */
 
+
 function setupPanelBasic4() {
     const gaugePositions = {
 	asi:         { x: 40,   y: 150, size: 200 },
 	alt:         { x: 620,  y: 150, size: 200 },
 	hdg:         { x: 40,   y: 450, size: 200 },
-	timerCanvas: { x: 260,  y: 230, size: 350 }
+	timerCanvas: { x: 260,  y: 230, size: 350 },
+	altGaugeTypeB: { x: 620,  y: 450, size: 200 }
+
     };
     
     for (const id in gaugePositions) {
@@ -115,7 +118,8 @@ function setupPanelG1000() {
     const gaugePositions = {
 //	switchesCanvasId: { x: 40,   y: 120, size: 600 },
  	timerCanvas:      { x: 600, y: 230, size: 200 },
-	g1000CanvasDivId: { x: 40,  y: 150, size: 500 }
+	g1000CanvasDivId: { x: 40,  y: 150, size: 100 }, // 500
+	radioStackCanvasDivId: { x: 40,  y: 50, size: 200 }
     };
     
     for (const id in gaugePositions) {
@@ -146,12 +150,13 @@ function setGauge(id, x, y, size = 300) {
 }
 
 function hideAllGauges() {
-    // make sure to hide the entire container - ie the div
+    // make sure to hide the entire container - use the divId
     const gauges =
 	  ["asi", "alt", "hdg", "timerCanvas", "hdgTypeB",
 	   "attitudeDivId",
 	   "turnRateDivId", "vsiCanvasDivId","switchesCanvasId",
-	   "trimCanvasId","g1000CanvasDivId"
+	   "trimCanvasId","g1000CanvasDivId",
+	   "radioStackCanvasDivId"
 	  ];
 
   gauges.forEach(id => {

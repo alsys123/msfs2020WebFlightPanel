@@ -10,15 +10,17 @@ How to add a new gauge to a panel:
 
 - add html section of canvas and div id
 
-- in panelDef.js  --> add to panel the divId under setupPanel*** (pick which ones)
+- in panelDef.js  --> add to panel the CANVAS id (not the divID)
+   under setupPanel*** (pick which ones)
 
-- in panelDef.js --> hideAllGauges .. add div id to the gauge list
+- in panelDef.js --> hideAllGauges .. add CANVAS id (not the divID) to the gauge list
 
 - in msfsWebPanel.js --> under startUpdateLoop add update guage
   routine name, for example: updateAttitude() .. found in new guage file
 
-- change style.css to add to this list so that resize will work
-    /* so resize will work on the div */
+- change style.css to add the canvas DivId to this list so that resize will work
+
+  /* so resize will work on the div */
     #turnRateDivId canvas,
     #asi canvas,
     #hdgTypeB canvas,
