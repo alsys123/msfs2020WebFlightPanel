@@ -92,6 +92,9 @@ canvas {
 }
 
 /* so resize will work on the div */
+
+#c172StackDivId canvas,
+#altGaugeTypeBDivId canvas,
 #radioStackCanvasDivId canvas,
 #g1000CanvasDivId canvas,
 #trimCanvasId canvas,

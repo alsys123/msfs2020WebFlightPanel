@@ -35,6 +35,13 @@ How to add a new gauge to a panel:
 - in panel**.js file,  check under update you have code like this:
     if (testMode === "pause") return;
 
+- for init you may need - for Example -  to make sure the dom is loaded on init:
+window.addEventListener("DOMContentLoaded", () => {
+    const altGaugeTypeB = document.getElementById("altGaugeTypeB");
+    drawAltimeterStyleB(altGaugeTypeB, 0, 29.92);
+});
+
+
 - go through the checklist to add the msfs and test freeds from server python code
 
 ==========

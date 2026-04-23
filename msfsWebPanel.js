@@ -14,8 +14,8 @@ let currentPanel = "basic4";
 const basicTitle = "MSFS Panels for Flight Sim - ";
 
 // Start immediately
-startUpdateLoop("pause");  // start up in pause mode
 setupPanelBasic4();
+startUpdateLoop("pause");  // start up in pause mode
 const btn = dei("basic4ID");   // whatever your button's ID is
 btn.classList.add("active");
 //btn.click();                    // triggers the full panel setup
@@ -126,6 +126,7 @@ function startUpdateLoop(testMode) {
 	updateG1000();
 	updateAltimeterTypeB();
 	updateG1000RadioStack();
+	updateC172RadioStack();
 	
     }, 200);
 }

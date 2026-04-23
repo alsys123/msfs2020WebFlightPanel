@@ -107,3 +107,17 @@ const radioCanvas = document.getElementById("radioStackCanvas");
 radioCanvas.width = 800; // Wide for the top of the PFD
 radioCanvas.height = 60;
 setInterval(updateG1000RadioStack, 100);
+
+window.addEventListener("DOMContentLoaded", () => {
+    let radioStateInit = {
+	com1_act: 121.500,
+	com1_stby: 118.700,
+	nav1_act: 110.30,
+	nav1_stby: 113.90,
+	xpdr_code: "1200",
+	xpdr_mode: "ALT"
+    };
+
+    const canvas = document.getElementById("radioStackCanvas");
+      drawG1000Stack(canvas, radioStateInit);
+});

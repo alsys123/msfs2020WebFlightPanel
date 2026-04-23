@@ -122,7 +122,25 @@ const stackCanvas = document.getElementById("c172Stack");
 stackCanvas.width = 260; // Narrower for a stack
 stackCanvas.height = 500;
 
-function updateC172() {
+function updateC172RadioStack() {
+    if (testMode === "pause") return;
+
   drawC172Stack(stackCanvas, c172Data);
 }
-setInterval(updateC172, 100);
+
+setInterval(updateC172RadioStack, 100);
+
+window.addEventListener("DOMContentLoaded", () => {
+    //init data
+    const c172Data = {
+	com1: { act: 118.700, stby: 121.500 },
+	nav1: { act: 113.90, stby: 110.30 },
+	com2: { act: 125.450, stby: 122.800 },
+	nav2: { act: 115.70, stby: 117.10 },
+	xpdr: { code: "1200", mode: "ALT" }
+    };
+    
+    const c172Stack = document.getElementById("c172Stack");
+    drawC172Stack(c172Stack, c172Data);
+
+});

@@ -1,8 +1,18 @@
 # msfs2020WebFlightPanel
 
-Just started on this.  The basic4 and sixPack are mostly working.
+update: Apr 23, 2026:
+Just started on this.
 
-Here is a url embedded call using google sites.  Just to see what panels and guages looks like:
+The basic4 and sixPack are mostly working including the connection to msfs.
+
+Also, part of the G1000 might work as well.
+
+The clock still need working.
+
+====
+
+Here is a url embedded call using google sites.
+Just to see what panels and guages looks like:
 
 https://sites.google.com/view/gringalleryreview/msfs-web-panel
 

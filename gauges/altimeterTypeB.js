@@ -141,7 +141,7 @@ function drawNeedle(ctx, cx, cy, angle, length, width, color, isPointer = false)
 // ==================== UPDATE LOGIC ====================
 async function updateAltimeterTypeB() {
 
-    cLog("updateAltimeterTypeB");
+//    cLog("updateAltimeterTypeB");
     
     if (testMode === "pause") return;
     
@@ -167,8 +167,13 @@ async function updateAltimeterTypeB() {
 // Initialize
 const altGaugeTypeB = document.getElementById("altGaugeTypeB");
 
-drawAltimeterStyleB(altGaugeTypeB, 0, 29.92);
+//drawAltimeterStyleB(altGaugeTypeB, 0, 29.92);
 
 altGaugeTypeB.width = 400;
 altGaugeTypeB.height = 400;
 setInterval(updateAltimeterTypeB, 50);
+
+window.addEventListener("DOMContentLoaded", () => {
+    const altGaugeTypeB = document.getElementById("altGaugeTypeB");
+    drawAltimeterStyleB(altGaugeTypeB, 0, 29.92);
+});
