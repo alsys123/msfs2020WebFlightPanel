@@ -3,7 +3,7 @@
    ------------------------------ */
 
 // Test mode toggle
-let testMode = "pause"; // "off", "on", "pause" .. if off, then we are LIVE
+let testMode = "off"; // "off", "on", "pause" .. if off, then we are LIVE
 let updateTimer = null;
 
 // for testing only!!!
@@ -52,7 +52,7 @@ document.querySelectorAll(".panel-btn").forEach(btn => {
 
 });
 
-
+/*
 document.getElementById("testToggle").addEventListener("click", () => {
 
     // we are toggling the Mode switch
@@ -68,10 +68,27 @@ document.getElementById("testToggle").addEventListener("click", () => {
 
     startUpdateLoop(testMode);
 });
+*/
 
 // set label and colours
-function setupTestButton(testMode) {
+// off, local, server, live
+function setupTestButton(testModeState) {
+    console.log("Test mode:", testModeState);
 
+    testMode = "pause"; // default
+
+    // backward compatible ... for now
+    if (testModeState === "off")
+	testMode = "pause";
+    else if (testModeState === "local")
+	testMode = "on"
+    else if (testModeState === "live")
+	testMode = "off"
+    
+//    if (testMode === "live") testMode = "off";
+
+    
+    /*
     if (testMode === "pause" || testMode === "on") {
 	dei("testToggle").textContent = `Test Mode: ${testMode.toUpperCase()}`;
     }
@@ -86,11 +103,12 @@ function setupTestButton(testMode) {
 	dei("testToggle").classList.add(testMode);
     
     console.log("Test mode:", testMode);
+*/
     
 }
 
-function startUpdateLoop(testMode) {
-    setupTestButton(testMode);
+function startUpdateLoop(testModeState) {
+    setupTestButton(testModeState);
     hideAllGauges();
 
     // Re-load the currently selected panel
@@ -133,3 +151,37 @@ function startUpdateLoop(testMode) {
 	
     }, 200);
 }
+
+// NOTE ?? here server test not coded yet ...
+
+document.querySelectorAll(".modeBtn").forEach(btn => {
+    btn.addEventListener("click", () => {
+
+        // Set mode directly
+        let testModeState = btn.dataset.mode;
+
+	// If clicking the already active mode → switch to OFF
+        if (testModeState === "local"  && testMode === "on")    testModeState = "off";
+        if (testModeState === "server" && testMode === "pause") testModeState = "off";
+        if (testModeState === "live"   && testMode === "off")   testModeState = "off";
+
+
+//	cLog("are they the same:",testModeState,testMode);
+
+        // Update button visuals -- remove all active first
+        document.querySelectorAll(".modeBtn").forEach(b => b.classList.remove("active"));
+
+	if (testModeState === "off")
+	    document.querySelector('.modeBtn[data-mode="off"]').classList.add("active");
+	else btn.classList.add("active");
+	
+//	// Highlight OFF if we switched to off
+//        const activeBtn = document.querySelector(`.modeBtn[data-mode="${testMode}"]`);
+//        if (activeBtn) activeBtn.classList.add("active");
+
+
+	// Update system
+        setupTestButton(testModeState);
+        startUpdateLoop(testModeState);
+    });
+});

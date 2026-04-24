@@ -23,10 +23,24 @@
       <button id="c172" class="panel-btn" data-panel="c172">C172</button>
       <button id="g1000" class="panel-btn" data-panel="g1000">G1000</button>
 
-      <button id="testToggle">Test Mode: Pause</button>
+      <!--      <button id="testToggle">Test Mode: Pause</button> 
+      <button class="modeBtn" data-mode="off">OFF</button>
+      <button class="modeBtn" data-mode="local">Test Local</button>
+      <button class="modeBtn" data-mode="server">Test Server</button>
+      <button class="modeBtn" data-mode="live">Live MSFS</button> -->
+      
+      <div id="panelModeBlock">
+	<div class="panelModeLabel">Panel Mode</div>
+	<div class="panelModeButtons">
+	  <button class="modeBtn active" data-mode="off">OFF</button>
+	  <button class="modeBtn" data-mode="local">Test Local</button>
+	  <button class="modeBtn" data-mode="server">Test Server</button>
+	  <button class="modeBtn" data-mode="live">Live</button>
+	</div>
+      </div>
+      
     </div>
 
-    
     
     <div id="asi">
       <canvas id="asiGauge" width="300" height="300"></canvas>

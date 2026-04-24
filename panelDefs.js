@@ -11,6 +11,8 @@ function setupPanelBasic4() {
 //	timerCanvas: { x: 260,  y: 230, size: 350 },
 	altGaugeTypeB: { x: 620,  y: 150, size: 200 },
 	attitudeDivId:  { x: 340,  y: 150, size: 200 },
+	panelTitle: { x: 20,  y: 50, size: 200 },
+	
 
 
     };
@@ -35,10 +37,11 @@ function setupPanelSixPack() {
 	hdgTypeB:        { x: 340,  y: 450, size: 200 },
 	vsiCanvasDivId: { x: 620,   y: 450, size: 200 },
 
-	altGaugeTypeB: { x: 620,  y: 150, size: 200 }
+	altGaugeTypeB: { x: 620,  y: 150, size: 200 },
+	panelTitle: { x: 20,  y: 50, size: 200 },
 
     };
-                        positionGaugesAndSetTitle(gaugePositions, "Six Pack Panel");
+    positionGaugesAndSetTitle(gaugePositions, "Six Pack Panel");
 /*
     for (const id in gaugePositions) {
 
@@ -56,7 +59,9 @@ function setupPanelSixPack() {
 
 function setupPanelSwitches() {
     const gaugePositions = {
-	switchesCanvasId: { x: 40,   y: 120, size: 600 }
+	switchesCanvasId: { x: 40,   y: 120, size: 600 },
+		panelTitle: { x: 20,  y: 50, size: 200 },
+
 // 	timerCanvas:      { x: 600,  y: 230, size: 350 }
     };
                     positionGaugesAndSetTitle(gaugePositions, "Switches");
@@ -77,7 +82,8 @@ function setupPanelEngine() {
 // 	timerCanvas:      { x: 40,  y: 120, size: 250 },
 	trimCanvasId:      { x: 40, y: 400, size: 300 },
 	fuelCanvas:       { x: 300,  y: 130, size: 100 },
-  timerCanvasStyleB: { x: 500,  y: 330, width: 420, height: 340 } //420, 340
+	timerCanvasStyleB: { x: 500,  y: 330, width: 420, height: 340 }, //420, 340
+	panelTitle: { x: 20,  y: 50, size: 200 },
 
     };
     positionGaugesAndSetTitle(gaugePositions, "Engine");
@@ -90,7 +96,9 @@ function setupPanelRadio() {
 // 	timerCanvas:      { x: 600,  y: 230, size: 350 },
 //	radioStackCanvasDivId: { x: 40,  y: 300, size: 300 }
 //	radioStackCanvasDivId: { x: 40,  y: 150, width: 500, height: 50 },
-	c172Stack: { x: 60,  y: 200, width: 400, height: 500 }
+	c172Stack: { x: 60,  y: 200, width: 400, height: 500 },
+	panelTitle: { x: 20,  y: 50, size: 200 },
+	
 
     };
 
@@ -113,7 +121,9 @@ function setupPanelC172() {
 
 	altGaugeTypeB:   { x: 620,  y: 150, size: 200 },
 	trimCanvasTypeB: { x: 850,   y: 450, width: 75, height: 200 },
-	fuelCanvas: { x: 150,  y: 130, size: 100 }
+	fuelCanvas: { x: 150,  y: 130, size: 100 },
+		panelTitle: { x: 20,  y: 50, size: 200 },
+
 
     };
         positionGaugesAndSetTitle(gaugePositions, "C172");
@@ -132,7 +142,9 @@ function setupPanelG1000() {
 //	switchesCanvasId: { x: 40,   y: 120, size: 600 },
 // 	timerCanvas:           { x: 750, y: 150, size: 200 },
 	radioStackCanvasDivId: { x: 40,  y: 150, width: 700, height: 50 },
-	g1000CanvasDivId:      { x: 40,  y: 200, width: 700, height: 500 }
+	g1000CanvasDivId:      { x: 40,  y: 200, width: 700, height: 500 },
+		panelTitle: { x: 20,  y: 50, size: 400 },
+
     };
 
     positionGaugesAndSetTitle(gaugePositions, "G1000");

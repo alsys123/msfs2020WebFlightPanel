@@ -1,20 +1,21 @@
 #topbar {
   display: flex;
   gap: 10px;
-  padding: 10px;
+  padding: 1px;
   justify-content: center;
-  margin-bottom: 20px;
+  margin-bottom: 2px;
 }
 
 #topbar button {
   background: #333;
   color: #eee;
   border: 1px solid #555;
-  padding: 8px 16px;
+  padding: 2px 8px;
   border-radius: 6px;
   cursor: pointer;
   font-size: 14px;
   transition: background 0.2s;
+  line-height: 1;        /* removes extra vertical space */
 }
 
 #topbar button:hover {
@@ -24,4 +25,70 @@
 #topbar button.active {
   background: #0078ff;
   border-color: #005fcc;
+}
+
+
+/* The test Mode Buttons */
+
+#panelModeBlock {
+  display: inline-block;
+  padding: 1px 1px;
+  background: #111;
+  border: 2px solid #444;
+  border-radius: 10px;
+  font-family: sans-serif;
+  color: white;
+}
+
+.panelModeLabel {
+  text-align: center;
+  font-size: 12px;
+  margin-bottom: 2px;
+  color: #ccc;
+  letter-spacing: 1px;
+}
+
+.panelModeButtons {
+  display: flex;
+  gap: 2px;
+}
+
+
+.modeBtn {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 8px;
+}
+
+
+/* OFF */
+#panelModeBlock .modeBtn[data-mode="off"] {
+  background: red;
+  color: white;
+}
+
+/* Local Test */
+#panelModeBlock .modeBtn[data-mode="local"] {
+  background: #f1c40f;
+  color: black;
+}
+
+/* Server Test */
+#panelModeBlock .modeBtn[data-mode="server"] {
+  background: #3498db;
+  color: white;
+}
+
+/* Live MSFS */
+#panelModeBlock .modeBtn[data-mode="live"] {
+  background: #2ecc71;
+  color: black;
+}
+
+/* Highlight active mode */
+#panelModeBlock .modeBtn.active {
+  outline: 3px solid white;
 }
