@@ -8,6 +8,11 @@ let stopwatch3TypeB = { running: false, startTime: 0, elapsed: 0 };
 
 let hoverZoneTypeB = 0; // 0 = none, 1 = SW1, 2 = SW2, 3 = SW3
 
+// Everything scales from the original
+// 340 = your original design height
+// width: 420
+const scale = canvas.height / 340;   
+
 function drawTimerFaceStyleB(canvas) {
   const ctx = canvas.getContext("2d");
   const w = canvas.width;
@@ -20,7 +25,7 @@ function drawTimerFaceStyleB(canvas) {
   // 1. BEZEL & INTERNAL DEPTH
   ctx.beginPath();
   ctx.arc(cx, cy, Math.min(w, h) / 2 - 10, 0, Math.PI * 2);
-  ctx.fillStyle = "red"; //"#080808";
+  ctx.fillStyle = "#080808";
   ctx.fill();
   
   // Metallic Outer Bezel
@@ -45,9 +50,23 @@ function drawTimerFaceStyleB(canvas) {
   const now = new Date();
   
   // 3. CLOCK SECTION (Top)
-  drawClockValue(ctx, cx - 70, 75, "LOCAL", now.toLocaleTimeString([], {hour: '2d', minute:'2d'}), "#00ffcc");
-  drawClockValue(ctx, cx + 70, 75, "ZULU", now.getUTCHours().toString().padStart(2,'0') + ":" + now.getUTCMinutes().toString().padStart(2,'0'), "#00ccff");
+    drawClockValue(
+	ctx,
+	cx - 70 * scale,
+	95 * scale, // was 75
+	"LOCAL",
+	now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+	"#00ffcc", scale );
 
+    drawClockValue(
+	ctx,
+	cx + 70 * scale,
+	95 * scale, // was 75
+	"ZULU",
+	now.getUTCHours().toString().padStart(2, "0") + ":" +
+	    now.getUTCMinutes().toString().padStart(2, "0"),
+	"#00ccff", scale );
+    
   // 4. FLIGHT TIME (Center - High Visibility)
   let flightStr = "00:00:00";
   if (flightStartTimeTypeB) {
@@ -60,10 +79,10 @@ function drawTimerFaceStyleB(canvas) {
   
   ctx.textAlign = "center";
   ctx.fillStyle = "#888";
-  ctx.font = "bold 12px sans-serif";
+    ctx.font = `bold ${12 * scale}px sans-serif`;
   ctx.fillText("FLIGHT TIME", cx, 135);
   ctx.fillStyle = "#ffff66";
-  ctx.font = "bold 38px monospace";
+    ctx.font = `bold ${24 * scale}px monospace`; //was 38
   ctx.shadowBlur = flightStartTimeTypeB ? 10 : 0;
   ctx.shadowColor = "#ffff66";
   ctx.fillText(flightStr, cx, 162);
@@ -106,19 +125,21 @@ function drawTimerFaceStyleB(canvas) {
     ctx.fillText(sw.label, sw.x, 230);
     
     ctx.fillStyle = isActive ? "#fff" : sw.color;
-    ctx.font = "bold 18px monospace";
+      ctx.font = `bold ${18 * scale}px monospace`; //was 18 .. stopwatch time
     ctx.fillText(timeStr, sw.x, 255);
   });
 }
 
 function drawClockValue(ctx, x, y, label, val, color) {
-  ctx.textAlign = "center";
-  ctx.fillStyle = "#888";
-  ctx.font = "bold 11px sans-serif";
-  ctx.fillText(label, x, y - 22);
-  ctx.fillStyle = color;
-  ctx.font = "bold 24px monospace";
-  ctx.fillText(val, x, y + 8);
+    ctx.textAlign = "center";
+    ctx.fillStyle = "#888";
+    //    ctx.font = "bold 11px sans-serif";
+    ctx.font = `bold ${11 * scale}px sans-serif`;
+    ctx.fillText(label, x, y - 22);
+    ctx.fillStyle = color;
+    //  ctx.font = "bold 24px monospace";
+    ctx.font = `bold ${18 * scale}px monospace`; // was 24
+    ctx.fillText(val, x, y + 8);
 }
 
 function getSWTimeFormatted(sw) {
@@ -197,14 +218,37 @@ function initTimerStyleB(canvasElement) {
   }, 200);
 }
 
+function getStopwatchZone(x, y, canvas) {
+    const w = canvas.width;
+    const h = canvas.height;
+    const cx = w / 2;
+
+    const boxY = 205;
+    const boxH = 75;
+
+    if (y < boxY || y > boxY + boxH) return 0;
+
+    // SW1
+    if (x > (cx - 110 - 50) && x < (cx - 110 + 50)) return 1;
+
+    // SW2
+    if (x > (cx - 50) && x < (cx + 50)) return 2;
+
+    // SW3
+    if (x > (cx + 110 - 50) && x < (cx + 110 + 50)) return 3;
+
+    return 0;
+}
+
 // Example usage with your canvas:
 const timerCanvasStyleB = document.getElementById("timerCanvasStyleB");
 
-timerCanvasStyleB.width = 420;
-timerCanvasStyleB.height = 340;
+//timerCanvasStyleB.width = 420;
+//timerCanvasStyleB.height = 340;
 
 initTimerStyleB(timerCanvasStyleB);
 
+/*
 // Example click handling (add to your HTML canvas)
 timerCanvasStyleB.addEventListener("click", (e) => {
 
@@ -219,7 +263,17 @@ timerCanvasStyleB.addEventListener("click", (e) => {
     else toggleStopwatchTypeB(2);
   }
 });
+*/
+timerCanvasStyleB.addEventListener("click", (e) => {
+    const rect = timerCanvasStyleB.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
 
+    const zone = getStopwatchZone(x, y, timerCanvasStyleB);
+    if (zone) toggleStopwatchTypeB(zone);
+});
+
+/*
 timerCanvasStyleB.addEventListener("mousemove", (e) => {
   const rect = timerCanvasStyleB.getBoundingClientRect();
   const x = e.clientX - rect.left;
@@ -238,7 +292,16 @@ timerCanvasStyleB.addEventListener("mousemove", (e) => {
   // Change cursor
   timerCanvasStyleB.style.cursor = zone ? "pointer" : "default";
 });
+*/
+timerCanvasStyleB.addEventListener("mousemove", (e) => {
+    const rect = timerCanvasStyleB.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
 
+    hoverZoneTypeB = getStopwatchZone(x, y, timerCanvasStyleB);
+    timerCanvasStyleB.style.cursor = hoverZoneTypeB ? "pointer" : "default";
+});
+/*
 timerCanvasStyleB.addEventListener("touchstart", (e) => {
   const rect = timerCanvasStyleB.getBoundingClientRect();
   const touch = e.touches[0];
@@ -252,6 +315,15 @@ timerCanvasStyleB.addEventListener("touchstart", (e) => {
   } else {
     hoverZoneTypeB = 0;
   }
+});
+*/
+timerCanvasStyleB.addEventListener("touchstart", (e) => {
+    const rect = timerCanvasStyleB.getBoundingClientRect();
+    const t = e.touches[0];
+    const x = t.clientX - rect.left;
+    const y = t.clientY - rect.top;
+
+    hoverZoneTypeB = getStopwatchZone(x, y, timerCanvasStyleB);
 });
 
 window.addEventListener("DOMContentLoaded", () => {
