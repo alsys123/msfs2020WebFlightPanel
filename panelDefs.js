@@ -75,7 +75,7 @@ function setupPanelEngine() {
  	timerCanvas:      { x: 40,  y: 120, size: 250 },
 	trimCanvasId:      { x: 40, y: 400, size: 300 },
 	fuelCanvas:       { x: 300,  y: 130, size: 100 },
-	timerCanvasStyleB: { x: 500,  y: 130, size: 100 }
+	timerCanvasStyleB: { x: 500,  y: 330, size: 300 }
 
     };
     positionGaugesAndSetTitle(gaugePositions, "Engine");
