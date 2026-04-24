@@ -253,3 +253,11 @@ timerCanvasStyleB.addEventListener("touchstart", (e) => {
     hoverZoneTypeB = 0;
   }
 });
+
+window.addEventListener("DOMContentLoaded", () => {
+    const c = document.getElementById("timerCanvasStyleB");
+    c.width = 420;
+    c.height = 340;
+    initTimerStyleB(c);
+});
+
