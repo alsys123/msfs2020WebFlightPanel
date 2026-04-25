@@ -7,9 +7,12 @@ import argparse
 import threading
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from socketserver import ThreadingMixIn
+from urllib.parse import urlparse, parse_qs
 
 sm = None
 aq = None
+#current_mode = "real"
+current_mode = "fake"
 
 # -----------------------------
 # Shared data dictionary
@@ -68,19 +71,24 @@ def real_simconnect_data():
 # -----------------------------
 # Data update loop
 # -----------------------------
-def start_data_loop(use_fake=False):
-    print(f"Starting data loop (fake={use_fake})")
-    get_data = fake_sim_data if use_fake else real_simconnect_data
+def start_data_loop():
+    global current_mode
 
     while True:
         try:
-            new_data = get_data()
+            if current_mode == "fake":
+                new_data = fake_sim_data()
+            else:
+                new_data = real_simconnect_data()
+
             with lock:
                 sim_data.update(new_data)
+
         except Exception as e:
             print("Sim data error:", e)
 
-        time.sleep(0.1)  # 10 updates/sec
+        time.sleep(0.1)
+
 
 # -----------------------------
 # Threaded HTTP server
@@ -104,7 +112,14 @@ class Handler(BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_GET(self):
-        if self.path == "/data":
+        parsed = urlparse(self.path)
+
+        if parsed.path == "/data":
+            qs = parse_qs(parsed.query)
+            global current_mode
+            if "test" in qs:
+                current_mode = "fake" if qs["test"][0] == "1" else "real"
+
             with lock:
                 payload = json.dumps(sim_data).encode()
 
@@ -113,10 +128,11 @@ class Handler(BaseHTTPRequestHandler):
             self.send_header("Content-Type", "application/json")
             self.end_headers()
             self.wfile.write(payload)
-        else:
-            self.send_response(404)
-            self.end_headers()
+            return
 
+        self.send_response(404)
+        self.end_headers()
+    
 # -----------------------------
 # Start HTTP server
 # -----------------------------
@@ -140,7 +156,9 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # Start data loop in background thread
-    t = threading.Thread(target=start_data_loop, args=(args.test,), daemon=True)
+#    t = threading.Thread(target=start_data_loop, args=(args.test,), daemon=True)
+    t = threading.Thread(target=start_data_loop, daemon=True)
+
     t.start()
 
     # Start HTTP server

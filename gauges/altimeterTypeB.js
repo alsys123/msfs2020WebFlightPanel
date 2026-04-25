@@ -157,7 +157,11 @@ async function updateAltimeterTypeB() {
 	    
 	    const res = await fetch(gServerIP);
 
+//	    cLog("alt type B res:", res);
+		 
 	    const d = await res.json();
+
+//	    cLog("alt type B data:", d);
 	    
 	    altitude = d.altitude;
 	    pressure = d.baro_setting || 29.92;

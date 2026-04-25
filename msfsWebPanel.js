@@ -3,7 +3,7 @@
    ------------------------------ */
 
 // Test mode toggle
-let testMode = "off"; // "off", "on", "pause" .. if off, then we are LIVE
+let testMode = "pause"; // "off", "on", "pause" .. if off, then we are LIVE
 let updateTimer = null;
 
 // for testing only!!!
@@ -13,7 +13,21 @@ let currentPanel = "basic4";
 
 const basicTitle = "MSFS Panels for Flight Sim - ";
 
-let gServerIP = "http://127.0.0.1:5050/data";
+//let gServerIP = "http://127.0.0.1:5050/data";
+//let gServerIP = "http://127.0.0.1:5050/data?test=1";
+
+let gServerIpPort = "http://127.0.0.1:5050/data";
+
+//let gServerIP = "http://127.0.0.1:5050/data"; // used in gauges call
+let gServerIP = ""; // used in gauges call
+
+//let gServerIP = "http://127.0.0.1:5050/data?test=0";
+const gTestOnCall = "?test=1";
+const gTestOffCall = "?test=0";
+
+let testModeInternal = "off";  // used only for toggling logic
+//let testModeInternal = "pause";  // used only for toggling logic
+
 
 // Start immediately
 setupPanelBasic4();
@@ -74,39 +88,51 @@ document.getElementById("testToggle").addEventListener("click", () => {
 
 // set label and colours
 // off, local, server, live
-function setupTestButton(testModeState) {
+/*function setupTestButton(testModeState) {
     console.log("Test mode:", testModeState);
 
     testMode = "pause"; // default
 
     // backward compatible ... for now
     if (testModeState === "off")
-	testMode = "pause";
+	testMode = "pause";  // in this mode gauges will do nothing
     else if (testModeState === "local")
-	testMode = "on"
-    else if (testModeState === "live")
-	testMode = "off"
-    
-//    if (testMode === "live") testMode = "off";
-
-    
-    /*
-    if (testMode === "pause" || testMode === "on") {
-	dei("testToggle").textContent = `Test Mode: ${testMode.toUpperCase()}`;
+	testMode = "on";     // gauges run local dummy data
+    else if (testModeState === "server") {
+	testMode = "off";  // get dummy data from the server
+	gServerIP = gServerIP + gTestOffCall;
     }
-    if (testMode === "off") {
-	dei("testToggle").textContent = "Live!";
+    else if (testModeState === "live") {
+	testMode = "off";   // get actual data from msfs
+	gServerIP = gServerIP + gTestOnCall;
     }
-
-    // remove old classes
-    dei("testToggle").classList.remove("off", "on", "pause");
-
-  // add new class
-	dei("testToggle").classList.add(testMode);
     
-    console.log("Test mode:", testMode);
+    
+}
 */
-    
+function setupTestButton(testModeState) {
+    console.log("Test mode:", testModeState);
+
+    // internal state for toggling
+    testModeInternal = testModeState;
+
+    testMode = "pause"; // default
+
+    // output state for gauge logic
+    if (testModeState === "off") {
+        testMode = "pause";
+    }
+    else if (testModeState === "local") {
+        testMode = "on";
+    }
+    else if (testModeState === "server") {
+        testMode = "off";   // server uses off-state gauges
+        gServerIP = gServerIpPort + gTestOnCall;
+    }
+    else if (testModeState === "live") {
+        testMode = "off";   // live uses off-state gauges
+        gServerIP = gServerIpPort + gTestOffCall;
+    }
 }
 
 function startUpdateLoop(testModeState) {
@@ -166,10 +192,13 @@ document.querySelectorAll(".modeBtn").forEach(btn => {
         let testModeState = btn.dataset.mode;
 
 	// If clicking the already active mode → switch to OFF
-        if (testModeState === "local"  && testMode === "on")    testModeState = "off";
-        if (testModeState === "server" && testMode === "pause") testModeState = "off";
-        if (testModeState === "live"   && testMode === "off")   testModeState = "off";
+//        if (testModeState === "local"  && testMode === "on")    testModeState = "off";
+//        if (testModeState === "server" && testMode === "pause") testModeState = "off";
+//        if (testModeState === "live"   && testMode === "off")   testModeState = "off";
 
+	if (testModeState === testModeInternal) {
+	    testModeState = "off";
+}
 
 //	cLog("are they the same:",testModeState,testMode);
 
@@ -180,10 +209,6 @@ document.querySelectorAll(".modeBtn").forEach(btn => {
 	    document.querySelector('.modeBtn[data-mode="off"]').classList.add("active");
 	else btn.classList.add("active");
 	
-//	// Highlight OFF if we switched to off
-//        const activeBtn = document.querySelector(`.modeBtn[data-mode="${testMode}"]`);
-//        if (activeBtn) activeBtn.classList.add("active");
-
 
 	// Update system
         setupTestButton(testModeState);
