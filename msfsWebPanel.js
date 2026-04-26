@@ -9,7 +9,6 @@ let updateTimer = null;
 // for testing only!!!
 let currentKts = 0;
 
-//let currentPanel = "basic4";
 let currentPanel = "sixPack";
 
 const basicTitle = "MSFS Panels for Flight Sim - ";
@@ -34,10 +33,8 @@ let testModeInternal = "off";  // used only for toggling logic
 
 
 // Start immediately
-//setupPanelBasic4();
 setupPanelSixPack();
 startUpdateLoop("pause");  // start up in pause mode
-//const btn = dei("basic4ID");   // whatever your button's ID is
 const btn = dei("sixPackId");   // whatever your button's ID is
 btn.classList.add("active");
 //btn.click();                    // triggers the full panel setup
@@ -55,11 +52,11 @@ document.querySelectorAll(".panel-btn").forEach(btn => {
 	//const panel = btn.dataset.panel;
 	
 	currentPanel = btn.dataset.panel;
-	cLog("Selected panel:", currentPanel);
+	cLog("Selected panel/button:", currentPanel);
 
 	hideAllGauges();
 
-	if (currentPanel === "basic4") 	  setupPanelBasic4();
+//	if (currentPanel === "basic4") 	  setupPanelBasic4();
 	if (currentPanel === "sixPack")   setupPanelSixPack();
 	if (currentPanel === "switches")  setupPanelSwitches();
 
@@ -146,7 +143,7 @@ function startUpdateLoop(testModeState) {
     hideAllGauges();
 
     // Re-load the currently selected panel
-    if (currentPanel === "basic4") setupPanelBasic4();
+//    if (currentPanel === "basic4") setupPanelBasic4();
     if (currentPanel === "sixPack") setupPanelSixPack();
     if (currentPanel === "switches") setupPanelSwitches();
 
@@ -220,4 +217,68 @@ document.querySelectorAll(".modeBtn").forEach(btn => {
         setupTestButton(testModeState);
         startUpdateLoop(testModeState);
     });
+});
+
+// ** Hide and show buttons
+
+const buttonIds = [
+  "sixPackId",
+    "switches",
+    "engine",
+    "radio",
+    "c172",
+    "g1000",
+    "panelModeBlock",
+];
+
+const hideBtn = document.getElementById("hideButtonId");
+
+
+function applyButtonVisibility(hidden) {
+  buttonIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+
+    if (hidden) el.classList.add("hiddenButtons");
+    else el.classList.remove("hiddenButtons");
+  });
+
+  hideBtn.textContent = hidden ? "Show" : "Hide";
+}
+
+function toggleButtons(e) {
+  e.preventDefault();
+
+  const hidden = localStorage.getItem("buttonsHidden") === "true";
+  const newState = !hidden;
+
+  localStorage.setItem("buttonsHidden", newState);
+  applyButtonVisibility(newState);
+}
+
+hideBtn.addEventListener("click", toggleButtons);
+hideBtn.addEventListener("touchstart", toggleButtons);
+
+// Restore on startup
+window.addEventListener("load", () => {
+  
+});
+
+
+const defaultIP = "192.168.1.100";
+const defaultPort = "5050";
+
+window.addEventListener("load", () => {
+    const savedIP = localStorage.getItem("msfs_ip") || defaultIP;
+    const savedPort = localStorage.getItem("msfs_port") || defaultPort;
+    
+    ipInput.value = savedIP;
+    portInput.value = savedPort;
+    
+    gServerIpPort = `http://${savedIP}:${savedPort}/data`;
+    
+    // button visibility
+    const hidden = localStorage.getItem("buttonsHidden") === "true";
+    applyButtonVisibility(hidden);
+
 });

@@ -6,6 +6,8 @@
 
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="topBar.css">
+    <link rel="stylesheet" href="settings.css">
+    
     
   </head>
 
@@ -14,7 +16,6 @@
     <h4 id="panelTitle" >Aviation Panel</h4>
 
     <div id="topbar">
-      <button id="basic4ID" class="panel-btn" data-panel="basic4">Basic4</button>
       <button id="sixPackId"  class="panel-btn" data-panel="sixPack">Six Pack</button>
       <button id="switches" class="panel-btn" data-panel="switches">Switches</button>
       
@@ -33,14 +34,43 @@
 	<div class="panelModeLabel">Panel Mode</div>
 	<div class="panelModeButtons">
 	  <button class="modeBtn active" data-mode="off">OFF</button>
-	  <button class="modeBtn" data-mode="local">Test Local</button>
-	  <button class="modeBtn" data-mode="server">Test Server</button>
-	  <button class="modeBtn" data-mode="live">Live</button>
+	  <button class="modeBtn"        data-mode="local">Test Local</button>
+	  <button class="modeBtn"        data-mode="server">Test Server</button>
+	  <button class="modeBtn"        data-mode="live">Live</button>
 	</div>
       </div>
+
+      <button id="settingsBtn" class="settings-button">⚙️</button>
       
     </div>
 
+    <button id="hideButtonId"     >Hide</button>
+
+      
+    <!-- SETTINGS WINDOW -->
+    <div id="settingsWindow" class="settings-window hidden">
+      <div id="settingsHeader" class="settings-header">
+	<span>Settings</span>
+	<button id="settingsClose" class="close-btn">✖</button>
+      </div>
+      
+      <div class="settings-body">
+	<label>Machine IP:</label>
+	<input id="ipInput" type="text" placeholder="192.168.1.50">
+	
+	<label>Port:</label>
+	<input id="portInput" type="number" placeholder="5050">
+	
+	<button id="saveSettings" class="save-btn">Save</button>
+	
+	<hr>
+	
+	<button id="helpBtn" class="help-btn">Help / About</button>
+	<div id="helpSection" class="help-section hidden">
+	</div>
+      </div>
+    </div>
+    
     
     <div id="asi">
       <canvas id="asiGauge" width="300" height="300"></canvas>
@@ -120,6 +150,7 @@
     
     
     <script src="utils.js"></script>
+    <script src="settings.js"></script>
     <script src="gauges/attitude.js"></script>
     <script src="gauges/timer.js"></script>
     <script src="gauges/turnRate.js"></script>
