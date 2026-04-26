@@ -45,6 +45,25 @@ def fake_sim_data():
         "heading": (t * 10) % 360
     }
 
+# REMEMBER we use _ between words!
+debug_vars = [
+    "TURN INDICATOR RATE",
+    "TURN COORDINATOR BALL",
+    "ROTATION VELOCITY Y",
+    "ACCELERATION LATERAL",
+    "PLANE BANK DEGREES",
+    "PLANE PITCH DEGREES",
+    "PLANE HEADING DEGREES TRUE",
+    "AIRSPEED INDICATED",
+    "VERTICAL SPEED",
+    "YAW STRING ANGLE",
+    "RUDDER POSITION",
+    "AILERON POSITION",
+    "RUDDER PEDAL POSITION",
+    "G FORCE",
+    "PLANE_HEADING_DEGREES_TRUE",
+]
+
 # -----------------------------
 # Real SimConnect data provider (auto-reconnect)
 # -----------------------------
@@ -65,13 +84,33 @@ def real_simconnect_data():
             sm = SimConnect()
             aq = AircraftRequests(sm, _time=0)
 
+            # Register missing SimVars
+            aq.find("ROTATION VELOCITY Y")
+            aq.find("ACCELERATION LATERAL")
+    
+        # --- DEBUG DUMP ---
+#        print("\n--- SIMCONNECT DEBUG DUMP ---")
+#        for var in debug_vars:
+#            try:
+#                val = aq.get(var)
+#                print(f"{var}: {val}")
+#           except Exception as e:
+#              print(f"{var}: ERROR ({e})")
+#        print("--- END DEBUG ---\n")
+        # -------------------
+        
         return {
             "airspeed": aq.get("AIRSPEED_INDICATED") or 0,
             "altitude": aq.get("PLANE_ALTITUDE") or 0,
             "heading": aq.get("PLANE_HEADING_DEGREES_TRUE") or 0,
             "pitch": aq.get("PLANE_PITCH_DEGREES") or 0,
             "roll": aq.get("PLANE_BANK_DEGREES") or 0,
-            "bug": aq.get("AUTOPILOT_HEADING_LOCK_DIR") or 0
+            "bug": aq.get("AUTOPILOT_HEADING_LOCK_DIR") or 0,
+            
+            "turn": aq.get("TURN_INDICATOR_RATE") or 0,
+            "slip": aq.get("TURN_COORDINATOR_BALL") or 0,
+            "verticalSpeed": aq.get("VERTICAL_SPEED") or 0,
+            "eTrim": aq.get("ELEVATOR_TRIM_POSITION") or 0
 
         }
 

@@ -175,11 +175,11 @@ function startUpdateLoop(testModeState) {
 //	updateAttitude();
 //	updateVsi();
 //	updateTrimWheel();
-//	updateG1000();
+	updateG1000();
 //	updateAltimeterTypeB(); // has self updater
 //	updateG1000RadioStack();
 //	updateC172RadioStack();
-//	updateTrimTypeB();
+	updateTrimTypeB();
 //	updateFuel();
 //	updateTimerClockStyleB();
 	
