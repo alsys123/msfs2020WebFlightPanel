@@ -176,10 +176,18 @@ async function updateTurnRate() {
     slipSkid = Math.sin(Date.now() / 650) * 1.1;
   } else {
     try {
-      const res = await fetch(gServerIP);
-      const d = await res.json();
-      turnRate = d.turn_rate || d.turnrate || 0;
-      slipSkid = d.slip || d.skid || 0;
+	const res = await fetch(gServerIP);
+	const d = await res.json();
+	const turnRateRaw = d.turn || 0;
+	const slipSkidRaw = d.slip || 0;
+	
+	cLog("turn and Skid Raw:",turnRateRaw, slipSkidRaw);
+
+	turnRate = (turnRateRaw * 180 / Math.PI) * 2.5;  // scale for needle
+	slipSkid = slipSkidRaw * 20;                         // scale for ball
+	
+	cLog("turn and Skid:",turnRate, slipSkid);
+	
     } catch (e) {
       console.log("Turn rate fetch error:", e);
     }
