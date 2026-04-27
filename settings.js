@@ -87,7 +87,7 @@ document.addEventListener("touchend", () => drag = false);
 
 
 function updateHelpText() {
-  const version = "0.0.2";
+  const version = "0.0.3";
   const ip = localStorage.getItem("msfs_ip") || "Not set";
   const port = localStorage.getItem("msfs_port") || "Not set";
 
