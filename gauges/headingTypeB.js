@@ -161,9 +161,12 @@ function drawHeadingAirplane(canvas) {
 
 
 async function updateHeadingTypeB() {
+	
+	cLog("testmode in heading ["+testMode+"]");
+	
     let hdg = 0;
 //    let headingBug;
-cLog("testmode in heading ["+testMode+"]");
+
 	
     if (testMode === "pause") return;
 
