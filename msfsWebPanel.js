@@ -165,7 +165,7 @@ function startUpdateLoop(testModeState) {
     /// ??? not quite sure we need this loop because each gauge
     // can loop itself.  Some do as noted below
     updateTimer = setInterval(() => {
-//	updateTurnRate();
+//	updateTurnRate();  // does its own update
 	updateASI();      
 //	updateAltimeter();
 //	updateHeading();  take this out.
