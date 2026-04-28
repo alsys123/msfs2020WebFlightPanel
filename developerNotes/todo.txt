@@ -27,6 +27,19 @@ def start_static_server():
 
 
 single handler
+
+data
+
+
+Everything else returns 404.
+
+But you could modify your existing handler so that:
+
+• / → returns index.html
+• /c172.html → returns that file
+• /js/... → returns JS files
+• /css/... → returns CSS files
+
 class Handler(BaseHTTPRequestHandler):
 
     def _set_cors(self):
