@@ -1,3 +1,76 @@
+
+flaps:
+<div id="flapsGauge" style="
+    position: relative;
+    width: 200px;      /* match your image width */
+    height: 200px;     /* match your image height */
+">
+
+    <!-- Your flaps gauge image -->
+    <img id="flapsBg"
+         src="images/flaps_gauge.png"
+         style="
+            position:absolute;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            z-index:1;
+         ">
+
+    <!-- Needle / slider -->
+    <div id="flapsNeedle"
+         style="
+            position:absolute;
+            width:6px;
+            height:20px;
+            background:#ffcc00;
+            left:32px;                 /* adjust to align with tick marks */
+            border-radius:3px;
+            z-index:2;
+         ">
+    </div>
+
+</div>
+
+function updateFlapsNeedle() {
+    const needle = document.getElementById("flapsNeedle");
+    const gauge  = document.getElementById("flapsGauge");
+
+    const flaps = gsdFlapsPercent;   // 0 → 100
+
+    const minY = 20;                        // top padding
+    const maxY = gauge.clientHeight - 40;   // bottom padding
+
+    // Convert 0–100 → pixel position
+    const t = flaps / 100;                  // normalize
+    const y = minY + t * (maxY - minY);
+
+    needle.style.top = `${y}px`;
+}
+
+function updateFlapsNeedle() {
+    const needle = document.getElementById("flapsNeedle");
+    const gauge  = document.getElementById("flapsGauge");
+
+    const idx = gsdFlapsIndex;  // 0,1,2,3
+
+    const positions = [
+        20,   // UP
+        70,   // 1
+        120,  // 2
+        170   // FULL
+    ];
+
+    needle.style.top = positions[idx] + "px";
+}
+
+adjust needle x position as needed
+left: 32px;
+
+======== 
+
+
 new trimwheel
 
 <div id="trimGauge" style="position: relative; width: 160px; height: 360px;">
