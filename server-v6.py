@@ -122,7 +122,8 @@ def real_simconnect_data():
             "turn": aq.get("TURN_INDICATOR_RATE") or 0,
             "slip": aq.get("TURN_COORDINATOR_BALL") or 0,
             "verticalSpeed": aq.get("VERTICAL_SPEED") or 0,
-            "eTrim": aq.get("ELEVATOR_TRIM_POSITION") or 0
+            "eTrim":  aq.get("ELEVATOR_TRIM_POSITION") or 0,
+            "flaps":  aq.get("FLAPS_HANDLE_INDEX") or 0
 
         }
 

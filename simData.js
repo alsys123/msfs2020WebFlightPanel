@@ -85,6 +85,7 @@ async function updateSimData() {
 	gsdAltitude = d.altitude;
 	sdPressure  = d.baro_setting || 29.92;
 
+	gsdFlapsIndex = d.flaps || 0;
 	
     } catch (e) {
 	console.log("Heading fetch error:", e);
