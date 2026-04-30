@@ -1,0 +1,104 @@
+// Connect to FSUIPC WebSocket server (default port 2048)
+const ws = new WebSocket('ws://localhost:2048');
+
+ws.onopen = () => {
+  console.log('Connected to FSUIPC');
+
+  // Request some vars - FSUIPC uses offset-based reads
+  const request = {
+    command: 'vars.read',
+    name: 'myRequest',
+    vars: [
+      { name: 'indicated_airspeed', unit: 'knots' },
+      { name: 'autopilot_master',   unit: 'bool' },
+      { name: 'light_beacon',       unit: 'bool' },
+      { name: 'light_nav',          unit: 'bool' },
+      { name: 'light_strobe',       unit: 'bool' },
+      { name: 'light_landing',      unit: 'bool' },
+    ]
+  };
+
+  ws.send(JSON.stringify(request));
+};
+
+ws.onmessage = (event) => {
+  const data = JSON.parse(event.data);
+  console.log(data);
+  // e.g. { light_beacon: true, light_nav: true, indicated_airspeed: 142.3 }
+};
+
+ws.onerror = (e) => console.error('FSUIPC error', e);
+ws.onclose = () => console.log('Disconnected');
+
+====
+
+for write back
+
+const write = {
+  command: 'vars.write',
+  vars: [{ name: 'light_beacon', unit: 'bool', value: 1 }]
+};
+ws.send(JSON.stringify(write));
+
+====
+
+using the data
+// One-time fetch
+fetch('http://localhost:3000/simvars')
+  .then(r => r.json())
+  .then(data => {
+    console.log(data);
+    // use data.altitude, data.light_beacon etc
+  });
+
+====
+
+polling loop
+
+async function updateCockpit() {
+  const data = await fetch('http://localhost:3000/simvars').then(r => r.json());
+
+  // Update your UI elements
+  document.getElementById('altitude').textContent = data.altitude.toFixed(0);
+  document.getElementById('airspeed').textContent = data.indicated_airspeed.toFixed(0);
+
+  // Toggle light indicators on/off
+  document.getElementById('beacon').classList.toggle('on', data.light_beacon);
+  document.getElementById('nav').classList.toggle('on', data.light_nav);
+  document.getElementById('strobe').classList.toggle('on', data.light_strobe);
+}
+
+// Poll every 200ms
+setInterval(updateCockpit, 200);
+
+=====
+
+global data 
+
+// Declare at the top level - now truly global
+let simData = {};
+
+async function updateCockpit() {
+  simData = await fetch('http://localhost:3000/simvars').then(r => r.json());
+  renderUI(); // update display after each fetch
+}
+
+setInterval(updateCockpit, 200);
+
+// Now any function anywhere can use simData
+function someOtherFunction() {
+  console.log(simData.altitude);
+  console.log(simData.light_beacon);
+}
+
+function renderUI() {
+  document.getElementById('altitude').textContent = simData.altitude;
+}
+
+=====
+
+python executable
+
+pip install pyinstaller
+pyinstaller --onefile server.py
+
