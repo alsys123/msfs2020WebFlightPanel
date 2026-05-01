@@ -14,7 +14,7 @@ let gsdTurnRate = 0;
 let gsdSlipSkid = 0;
 
 let gsdTrimValue = 0; // -1.0 to 1.0
-let gsdApActive  = true;
+let gsdApActive  = false;
 
 let gsdKts = 0;
 

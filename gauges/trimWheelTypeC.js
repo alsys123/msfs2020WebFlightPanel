@@ -36,3 +36,19 @@ function updateTrimWheelTypeC() {
     const needle = document.getElementById("trimWheelNeedleTypeC");
     needle.style.top = `${needleY}px`;
 }
+
+function updateTrimApIndicator() {
+
+//    cLog("update AP Indicator");
+    
+    // test only
+//    gsdApActive = true;
+    
+    const ap = document.getElementById("trimApIndicatorTypeC");
+
+    if (gsdApActive) {
+        ap.style.display = "block";
+    } else {
+        ap.style.display = "none";
+    }
+}

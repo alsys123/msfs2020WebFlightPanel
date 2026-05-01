@@ -189,6 +189,7 @@ function startUpdateLoop(testModeState) {
 //	updateTimerClockStyleB();
 	updateFlapsNeedle();
 	updateTrimWheelTypeC();
+	updateTrimApIndicator();
 	
     }, 200);
 }
