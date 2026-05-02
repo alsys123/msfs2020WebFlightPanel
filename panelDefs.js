@@ -127,8 +127,8 @@ function setupPanelRadio() {
 //	radioStackCanvasDivId: { x: 40,  y: 150, width: 500, height: 50 },
 	c172Stack: { x: 60,  y: 200, width: 400, height: 500 },
 	panelTitle: { x: 20,  y: 50, size: 200 },
-	trimWheelTypeCDivId: { x: 650,  y: 200, width: 90, height: 300 }
-	
+	trimWheelTypeCDivId: { x: 650,  y: 200, width: 90, height: 300 },
+	brakeLightDivId: { x: 500,  y: 300, width: 50, height: 50 }
     };
 
     positionGaugesAndSetTitle(gaugePositions, "Radio - Work in Progress");
@@ -214,7 +214,8 @@ function hideAllGauges() {
 	   "radioStackCanvasDivId",
 	   "altGaugeTypeB", // hiding the canvas not the Div
 	   "c172Stack", "trimCanvasTypeB","fuelCanvas","timerCanvasStyleB",
-	   "asiTypeBDivId","flapsGaugeDivId","trimWheelTypeCDivId"
+	   "asiTypeBDivId","flapsGaugeDivId","trimWheelTypeCDivId",
+	   "brakeLightDivId"
 	  ];
 
   gauges.forEach(id => {

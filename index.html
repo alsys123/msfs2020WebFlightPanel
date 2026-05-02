@@ -265,6 +265,40 @@
 
     </div>
 
+
+    <!-- /* Parking Brake light --> 
+    
+<div id="brakeLightDivId" style="position: relative; width: 300px; height: 300px;">
+
+  <!-- Background image -->
+  <img id="brakeLightBackingDivId"
+       src="images/parkingBrake.png"
+       style="
+          position:absolute;
+          top:0;
+          left:0;
+          width:100%;
+          height:100%;
+          z-index:1;
+       ">
+
+  <!-- Full red overlay -->
+  <div id="brakeLightOverlay"
+       style="
+          position:absolute;
+          top:0;
+          left:0;
+          width:100%;
+          height:100%;
+          background:rgba(255,0,0,0.35); /* transparent red */
+          z-index:2;
+          display:none; /* hidden when off */
+       ">
+  </div>
+
+</div>
+
+
     
     
     <script src="utils.js"></script>
@@ -289,6 +323,7 @@
     <script src="gauges/speedGaugeTypeB.js"></script>
     <script src="gauges/flaps.js"></script>
     <script src="gauges/trimWheelTypeC.js"></script>
+    <script src="gauges/parkingBrake.js"></script>
 
     
     <script src="panelDefs.js"></script>

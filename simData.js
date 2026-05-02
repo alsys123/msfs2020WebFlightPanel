@@ -25,6 +25,10 @@ let gsdFlapsIndex = 0;
 let testFlapIndex = 0;        // 0..3
 let lastFlapChange = 0;       // timestamp
 
+//let gsdBrakeLeft    = 0;
+//let gsdBrakeRight   = 0;
+let gsdParkingBrake = 0;
+
 async function updateSimData() {
     
     cLog("updateSimData");
@@ -60,6 +64,9 @@ async function updateSimData() {
 	// Output simulated flap index
 	gsdFlapsIndex = testFlapIndex;
 
+	gsdParkingBrake = (new Date().getSeconds() % 6 < 3) ? 1 : 0; // every 6 seconds
+	
+	
   } else {
     try {
 

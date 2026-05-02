@@ -190,6 +190,7 @@ function startUpdateLoop(testModeState) {
 	updateFlapsNeedle();
 	updateTrimWheelTypeC();
 	updateTrimApIndicator();
+	updateBrakeLight();
 	
     }, 200);
 }
