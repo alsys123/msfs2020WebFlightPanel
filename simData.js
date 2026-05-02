@@ -73,27 +73,30 @@ async function updateSimData() {
 	const res = await fetch(gServerIP);
 	const d   = await res.json();
 
+	cLog("d data packet from server",d);
 	
-	gsdHeading = d.heading || 0;
+	gsdHeading = d.headingMag || 0;
 	gsdHeading = radToDeg(gsdHeading);
 	
-	gsdHeadingBug = d.bug;
+	gsdHeadingBug = d.apHeadingBug;
 
-	const turnRateRaw = d.turn || 0;
-	const slipSkidRaw = d.slip || 0;
+	const turnRateRaw = d.turnRate || 0;
+	const slipSkidRaw = d.slipSkid || 0;
 	gsdTurnRate = (turnRateRaw * 180 / Math.PI) * 2.5;  // scale for needle
 	gsdSlipSkid = slipSkidRaw * 10;                     // scale for ball
 
-	gsdTrimValue = d.eTrim || 0; 
-	gsdApActive = d.ap_active || false;
+	gsdTrimValue = d.elevatorTrim || 0; 
+	gsdApActive = d.apMaster || false;
 
 	gsdKts = d.airspeed;
 
 	gsdAltitude = d.altitude;
 	sdPressure  = d.baro_setting || 29.92;
 
-	gsdFlapsIndex = d.flaps || 0;
-	
+	gsdFlapsIndex = d.flapsIndex || 0;
+
+	gsdParkingBrake = d.brakeLeft || d.brakeRight || d.parkingBrake || 0;
+	    
     } catch (e) {
 	console.log("Heading fetch error:", e);
 	return;

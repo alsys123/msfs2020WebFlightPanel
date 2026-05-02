@@ -1,6 +1,3 @@
-# msfs2020WebFlightPanel
-
-update: Apr 24, 2026:
 
 Just started on this.  Not really ready because script files would
 need to be edited first.
