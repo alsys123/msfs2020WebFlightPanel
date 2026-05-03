@@ -37,13 +37,6 @@ Here is the mainline code for the app:
 
 
 =====
-This is all in windows where your msfs is running.
-
-start by running:
-
-python server-v6.py
-
-
 
 Once started, any device running a modern browser can bring up the panels.  You can have as many devices as you like.  Works with tablets, window machines, macs, linux and so.  Will work on phones and eventually it might be optimized for the smaller size.
 
@@ -53,10 +46,4 @@ get ip on windows:
 
 ipconfig --> IPv4 address ... something link 10.0.0.218
 
-===
-To launch a local server:
-
-python -m http.server 8080
-
-=====
 
