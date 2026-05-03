@@ -1,0 +1,47 @@
+def simconnect_set(var, value):
+    global sm, aq
+
+    if not simconnect_available:
+        return False
+
+    try:
+        if sm is None:
+            sm = SimConnect()
+            aq = AircraftRequests(sm, _time=0)
+
+        aq.set(var, value)
+        return True
+
+    except Exception as e:
+        print("SimConnect SET error:", e)
+        sm = None
+        return False
+
+Inside your Handler.do_GET() method, add this before the 404:
+if parsed.path == "/set":
+    qs = parse_qs(parsed.query)
+
+    if "var" in qs and "value" in qs:
+        var = qs["var"][0]
+        value = float(qs["value"][0])
+
+        ok = simconnect_set(var, value)
+
+        self.send_response(200)
+        self._set_cors()
+        self.send_header("Content-Type", "application/json")
+        self.end_headers()
+        self.wfile.write(json.dumps({"ok": ok}).encode())
+        return
+
+
+supports
+/set?var=LIGHT_LANDING&value=1
+/set?var=LIGHT_LANDING&value=0
+/set?var=PITOT_HEAT&value=1
+/set?var=FUEL_PUMP&value=1
+
+async function setLandingLight(on) {
+    await fetch(`/set?var=LIGHT_LANDING&value=${on ? 1 : 0}`);
+}
+
