@@ -134,3 +134,15 @@ document.addEventListener("keydown", (e) => {
     drawSwitches(panelCanvas);
   }
 });
+
+function updateSwitches() {
+  
+    const master = switches.find(s => s.id === "parkingBrake");
+    if (gsdParkingBrake) {
+    master.state = true;
+    } else {
+    master.state = false;
+    }
+  
+  drawSwitches(panelCanvas);
+}
