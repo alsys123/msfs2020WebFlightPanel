@@ -4,9 +4,10 @@ need to be edited first.
 
 The basic4 and sixPack are mostly working including the connection to msfs.
 
-Also, part of the G1000 might work as well.
 
+Also, part of the G1000 might work as well.
 The clock still need working.
+
 ====
 How to use it:
 1. Download the repo
